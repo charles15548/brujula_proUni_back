@@ -92,7 +92,7 @@ public class DesarrolloPersonalSI implements DesarrolloPersonalService{
 
 
 	@Override
-	public ResponseEntity<Map<String, Object>> crearDesarrolloPersonal(String titulo, String contenido, Long id_tipo,
+	public ResponseEntity<Map<String, Object>> crearDesarrolloPersonal(String titulo, String contenido, Long idTipo,
 			MultipartFile imagen) {
 		Map<String, Object> respuesta = new HashMap<>();
         
@@ -102,7 +102,7 @@ public class DesarrolloPersonalSI implements DesarrolloPersonalService{
             String Url = subirImagen(imagen, filename);
 
             // Guardar noticia
-            Desarrollo_Personal desarrollo_Personal = new Desarrollo_Personal(titulo, contenido,id_tipo, Url);
+            Desarrollo_Personal desarrollo_Personal = new Desarrollo_Personal(titulo, contenido,idTipo, Url);
             Desarrollo_Personal nueva = dao.save(desarrollo_Personal);
             
             respuesta.put("mensaje", "dp creada con éxito");
