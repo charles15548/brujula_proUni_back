@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.proUni.brujula.models.Desarrollo_Personal;
 import com.proUni.brujula.models.Noticias;
+import com.proUni.brujula.service.DesarrolloPersonalService;
 import com.proUni.brujula.service.NoticiasService;
 
 @RestController
@@ -26,11 +28,11 @@ import com.proUni.brujula.service.NoticiasService;
 public class DesarrolloPersonalController {
 
     @Autowired
-    private NoticiasService service;
+    private DesarrolloPersonalService service;
 
     @GetMapping
     public ResponseEntity<Map<String, Object>> listarDesarrolloPersonal() {
-        return service.listarNoticias();
+        return service.listarDesarrolloPersonal();
     }
 
 
@@ -38,19 +40,19 @@ public class DesarrolloPersonalController {
     public ResponseEntity<Map<String, Object>> crearDesarrolloPersonal(
     		@RequestParam("titulo") String titulo,
     		@RequestParam("contenido") String contenido,
-    		@RequestParam("idTipo") String idTipo,
+    		@RequestParam("idTipo") Long idTipo,
     		@RequestParam("imagen") MultipartFile imagen) {
-        return service.crearNoticia(titulo,contenido,imagen);
+        return service.crearDesarrolloPersonal(titulo,contenido,idTipo,imagen);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Map<String, Object>> actualizarDesarrolloPersonal(@PathVariable Long id, @RequestBody Noticias noticia) {
-        return service.actualizarNoticia(id, noticia);
+    public ResponseEntity<Map<String, Object>> actualizarDesarrolloPersonal(@PathVariable Long id, @RequestBody Desarrollo_Personal desaPersonal) {
+        return service.actualizarDesarrolloPersonal(id, desaPersonal);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, Object>> eliminarDesarrolloPersonal(@PathVariable Long id) {
-        return service.eliminarNoticia(id);
+        return service.eliminarDesarrolloPersonal(id);
     }
 }
 
