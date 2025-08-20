@@ -23,6 +23,8 @@ public class Noticias {
     @Column(name = "imagen_url")
     private String imagenUrl;
 
+    public Noticias() {}
+
     public Noticias(String titulo, String contenido, String imagenUrl) {
         this.titulo = titulo;
         this.contenido = contenido;
