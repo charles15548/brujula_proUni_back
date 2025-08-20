@@ -11,4 +11,4 @@ COPY . .
 RUN chmod +x mvnw && ./mvnw clean package -DskipTests
 
 # Arrancamos la app
-CMD ["java", "-jar", "target/*.jar"]
+CMD ["java", "-jar", "target/brujula_proUni_back-0.0.1-SNAPSHOT.jar"]
