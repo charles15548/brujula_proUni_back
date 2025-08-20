@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: brujula-prouni-back
+    runtime: docker
+    plan: free
+    envVars:
+      - key: DB_URL
+        value: jdbc:postgresql://aws-1-sa-east-1.pooler.supabase.com:5432/postgres
+      - key: DB_USERNAME
+        value: postgres.ykayyxqcplawwwyjqbrq
+      - key: DB_PASSWORD
+        value: BD_Brujula_ProUNI
+    buildCommand: "./mvnw clean package -DskipTests"
+    startCommand: "java -jar target/*.jar"
