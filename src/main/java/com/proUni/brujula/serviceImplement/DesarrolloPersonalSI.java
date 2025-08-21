@@ -1,6 +1,5 @@
 package com.proUni.brujula.serviceImplement;
 
-import java.lang.StackWalker.Option;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -19,12 +18,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.proUni.brujula.models.Desarrollo_Personal;
-import com.proUni.brujula.models.Noticias;
+import com.proUni.brujula.models.DesarrolloPersonal;
 import com.proUni.brujula.repository.DesarrolloPersonalRepository;
-import com.proUni.brujula.repository.NoticiasRepository;
 import com.proUni.brujula.service.DesarrolloPersonalService;
-import com.proUni.brujula.service.NoticiasService;
 
 @Service
 public class DesarrolloPersonalSI implements DesarrolloPersonalService{
@@ -42,7 +38,7 @@ public class DesarrolloPersonalSI implements DesarrolloPersonalService{
 	@Override
 	public ResponseEntity<Map<String, Object>> listarDesarrolloPersonal() {
 		Map<String,Object> respuesta = new HashMap<>();	
-		List<Desarrollo_Personal> desarrollo_Personal = dao.findAll();
+		List<DesarrolloPersonal> desarrollo_Personal = dao.findAll();
 		
 		if(!desarrollo_Personal.isEmpty()) {
 			respuesta.put("mensaje", "Lista de DP");
@@ -102,8 +98,8 @@ public class DesarrolloPersonalSI implements DesarrolloPersonalService{
             String Url = subirImagen(imagen, filename);
 
             // Guardar noticia
-            Desarrollo_Personal desarrollo_Personal = new Desarrollo_Personal(titulo, contenido,idTipo, Url);
-            Desarrollo_Personal nueva = dao.save(desarrollo_Personal);
+            DesarrolloPersonal desarrollo_Personal = new DesarrolloPersonal(titulo, contenido,idTipo, Url);
+            DesarrolloPersonal nueva = dao.save(desarrollo_Personal);
             
             respuesta.put("mensaje", "dp creada con éxito");
             respuesta.put("desarrollo_Personal", nueva);
@@ -118,13 +114,13 @@ public class DesarrolloPersonalSI implements DesarrolloPersonalService{
 
 	@Override
 	public ResponseEntity<Map<String, Object>> actualizarDesarrolloPersonal(Long id,
-	        Desarrollo_Personal desarrollo_Personal) {
+	        DesarrolloPersonal desarrollo_Personal) {
 
 	    Map<String, Object> respuesta = new HashMap<>();
-	    Optional<Desarrollo_Personal> existe = dao.findById(id);
+	    Optional<DesarrolloPersonal> existe = dao.findById(id);
 
 	    if (existe.isPresent()) {
-	        Desarrollo_Personal dp = existe.get();
+	        DesarrolloPersonal dp = existe.get();
 	        dp.setTitulo(desarrollo_Personal.getTitulo());
 	        dp.setContenido(desarrollo_Personal.getContenido());
 	        dp.setTipo_Desarrollo_Personal(desarrollo_Personal.getTipo_Desarrollo_Personal());
@@ -154,7 +150,7 @@ public class DesarrolloPersonalSI implements DesarrolloPersonalService{
 	@Override
 	public ResponseEntity<Map<String, Object>> eliminarDesarrolloPersonal(Long id) {
 		Map<String, Object> respuesta = new HashMap<>();
-        Optional<Desarrollo_Personal> desarrollo_Personal = dao.findById(id);
+        Optional<DesarrolloPersonal> desarrollo_Personal = dao.findById(id);
 
         if (desarrollo_Personal.isPresent()) {
             dao.deleteById(id);

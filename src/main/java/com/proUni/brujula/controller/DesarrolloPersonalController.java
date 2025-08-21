@@ -17,10 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.proUni.brujula.models.Desarrollo_Personal;
-import com.proUni.brujula.models.Noticias;
+import com.proUni.brujula.models.DesarrolloPersonal;
 import com.proUni.brujula.service.DesarrolloPersonalService;
-import com.proUni.brujula.service.NoticiasService;
 
 @RestController
 @RequestMapping("/api/desarrollo_personal")
@@ -46,7 +44,7 @@ public class DesarrolloPersonalController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Map<String, Object>> actualizarDesarrolloPersonal(@PathVariable Long id, @RequestBody Desarrollo_Personal desaPersonal) {
+    public ResponseEntity<Map<String, Object>> actualizarDesarrolloPersonal(@PathVariable Long id, @RequestBody DesarrolloPersonal desaPersonal) {
         return service.actualizarDesarrolloPersonal(id, desaPersonal);
     }
 

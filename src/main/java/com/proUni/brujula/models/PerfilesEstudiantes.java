@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @Table(name = "perfiles_estudiante")
-public class Perfiles_estudiantes{
+public class PerfilesEstudiantes{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,13 +21,13 @@ public class Perfiles_estudiantes{
     
     @ManyToOne
     @JoinColumn(name = "perfil_id")
-    private Auth_estudiantes estudiante;
+    private AuthEstudiantes estudiante;
 
     @Column(name = "fecha_registro")
     private LocalDateTime fechaRegistro = LocalDateTime.now();
 
-    public Perfiles_estudiantes() {};
-	public Perfiles_estudiantes(String nombres, String apellidos, String carrera, Auth_estudiantes estudiante,
+    public PerfilesEstudiantes() {};
+	public PerfilesEstudiantes(String nombres, String apellidos, String carrera, AuthEstudiantes estudiante,
 			LocalDateTime fechaRegistro) {
 		this.nombres = nombres;
 		this.apellidos = apellidos;

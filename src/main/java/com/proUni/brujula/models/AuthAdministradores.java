@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @Table(name = "auth_admins")
-public class Auth_administradores {
+public class AuthAdministradores {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,9 +22,9 @@ public class Auth_administradores {
     @Column(name = "fecha_registro", columnDefinition = "TIMESTAMP DEFAULT NOW()")
     private LocalDateTime fechaRegistro = LocalDateTime.now();
     
-    public Auth_administradores() {};
+    public AuthAdministradores() {};
 
-	public Auth_administradores(String nombre, String correo, String password, LocalDateTime fechaRegistro) {
+	public AuthAdministradores(String nombre, String correo, String password, LocalDateTime fechaRegistro) {
 		this.nombre = nombre;
 		this.correo = correo;
 		this.password = password;

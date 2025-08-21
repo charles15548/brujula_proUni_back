@@ -2,12 +2,11 @@ package com.proUni.brujula.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.LocalDateTime;
 
 @Entity
 @Data
 @Table(name = "tipo_desarrollo_personal")
-public class Tipo_Desarrollo_Personal {
+public class TipoDesarrolloPersonal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,9 +14,9 @@ public class Tipo_Desarrollo_Personal {
 
     private String descripcion;
     
-    public Tipo_Desarrollo_Personal() {}
+    public TipoDesarrolloPersonal() {}
 
-	public Tipo_Desarrollo_Personal(String descripcion) {
+	public TipoDesarrolloPersonal(String descripcion) {
 		this.descripcion = descripcion;
 	}
     
