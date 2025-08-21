@@ -24,7 +24,7 @@ public class AuthEstudianteSI {
 
 	        AuthEstudiantes estudiante = opt.get();
 
-	        if (password.equals(estudiante.getPassword())) {
+	        if (estudiante.getPassword().equals(password)) {
 	            return "✅ Login exitoso";
 	        } else {
 	            return "❌ Contraseña incorrecta";
