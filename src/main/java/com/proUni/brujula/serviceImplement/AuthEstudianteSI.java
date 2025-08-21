@@ -1,5 +1,7 @@
 package com.proUni.brujula.serviceImplement;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,19 +17,28 @@ public class AuthEstudianteSI {
     private AuthEstudianteRespository repository;
 
 	
-	public String login(String correo, String password) {
-	    	Optional<AuthEstudiantes> opt = repository.findByCorreo(correo);
+	public Map<String, Object> login(String correo, String password) {
+	    Map<String, Object> response = new HashMap<>();
+	    
+	    Optional<AuthEstudiantes> opt = repository.findByCorreo(correo);
 
-	        if (opt.isEmpty()) {
-	            return "❌ Correo no registrado";
-	        }
+	    if (opt.isEmpty()) {
+	        response.put("success", false);
+	        response.put("message", "❌ Correo no registrado");
+	        return response;
+	    }
 
-	        AuthEstudiantes estudiante = opt.get();
+	    AuthEstudiantes estudiante = opt.get();
 
-	        if (estudiante.getPassword().equals(password)) {
-	            return "✅ Login exitoso";
-	        } else {
-	            return "❌ Contraseña incorrecta";
-	        }
-	  }
+	    if (estudiante.getPassword().equals(password)) {
+	        response.put("success", true);
+	        response.put("message", "✅ Login exitoso");
+	    } else {
+	        response.put("success", false);
+	        response.put("message", "❌ Contraseña incorrecta");
+	    }
+
+	    return response;
+	}
 }
+
