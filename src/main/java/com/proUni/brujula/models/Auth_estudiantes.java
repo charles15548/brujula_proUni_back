@@ -19,4 +19,12 @@ public class Auth_estudiantes {
 
     @Column(name = "fecha_registro")
     private LocalDateTime fechaRegistro = LocalDateTime.now();
+
+    public Auth_estudiantes() {};
+	public Auth_estudiantes(String correo, String password, LocalDateTime fechaRegistro) {
+		this.correo = correo;
+		this.password = password;
+		this.fechaRegistro = fechaRegistro;
+	}
+    
 }

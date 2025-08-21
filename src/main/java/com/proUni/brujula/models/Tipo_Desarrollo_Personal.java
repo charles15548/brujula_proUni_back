@@ -14,4 +14,11 @@ public class Tipo_Desarrollo_Personal {
     private Long id;
 
     private String descripcion;
+    
+    public Tipo_Desarrollo_Personal() {}
+
+	public Tipo_Desarrollo_Personal(String descripcion) {
+		this.descripcion = descripcion;
+	}
+    
 }

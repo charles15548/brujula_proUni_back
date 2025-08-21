@@ -26,6 +26,8 @@ public class Desarrollo_Personal {
 
     @Column(name = "url")
     private String url;
+    
+    public Desarrollo_Personal() {}
 
     public Desarrollo_Personal(String titulo, String contenido, Long id_tipo, String url) {
         this.titulo = titulo;

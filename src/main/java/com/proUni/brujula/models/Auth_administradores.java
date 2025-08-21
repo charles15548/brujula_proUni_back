@@ -21,5 +21,15 @@ public class Auth_administradores {
 
     @Column(name = "fecha_registro", columnDefinition = "TIMESTAMP DEFAULT NOW()")
     private LocalDateTime fechaRegistro = LocalDateTime.now();
+    
+    public Auth_administradores() {};
+
+	public Auth_administradores(String nombre, String correo, String password, LocalDateTime fechaRegistro) {
+		this.nombre = nombre;
+		this.correo = correo;
+		this.password = password;
+		this.fechaRegistro = fechaRegistro;
+	}
+	
 
 }

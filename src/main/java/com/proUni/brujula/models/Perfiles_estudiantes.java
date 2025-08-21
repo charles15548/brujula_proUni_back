@@ -26,6 +26,16 @@ public class Perfiles_estudiantes{
     @Column(name = "fecha_registro")
     private LocalDateTime fechaRegistro = LocalDateTime.now();
 
+    public Perfiles_estudiantes() {};
+	public Perfiles_estudiantes(String nombres, String apellidos, String carrera, Auth_estudiantes estudiante,
+			LocalDateTime fechaRegistro) {
+		this.nombres = nombres;
+		this.apellidos = apellidos;
+		this.carrera = carrera;
+		this.estudiante = estudiante;
+		this.fechaRegistro = fechaRegistro;
+	}
+
      
 
 }
