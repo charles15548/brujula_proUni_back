@@ -43,8 +43,11 @@ public class NoticiasController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Map<String, Object>> actualizarNoticia(@PathVariable Long id, @RequestBody Noticias noticia) {
-        return service.actualizarNoticia(id, noticia);
+    public ResponseEntity<Map<String, Object>> actualizarNoticia(@PathVariable Long id, 
+    		@RequestParam("titulo") String titulo,
+    		@RequestParam("contenido") String contenido,
+    		@RequestParam(value = "imagen", required = false) MultipartFile imagen) {
+        return service.actualizarNoticia(id, titulo, contenido, imagen);
     }
 
     @DeleteMapping("/{id}")

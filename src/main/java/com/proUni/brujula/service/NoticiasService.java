@@ -10,7 +10,7 @@ import com.proUni.brujula.models.Noticias;
 public interface NoticiasService {
 	public ResponseEntity<Map<String, Object>> listarNoticias();
 	public ResponseEntity<Map<String, Object>> crearNoticia(String titulo, String contenido,MultipartFile imagen);
-    public ResponseEntity<Map<String, Object>> actualizarNoticia(Long id, Noticias noticia);
+    public ResponseEntity<Map<String, Object>> actualizarNoticia(Long id, String titulo, String contenido,MultipartFile imagen);
     public ResponseEntity<Map<String, Object>> eliminarNoticia(Long id);
 }
 

@@ -4,6 +4,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -54,7 +55,6 @@ public class NoticiasSI implements NoticiasService{
 	@Override
     public ResponseEntity<Map<String, Object>> crearNoticia(String titulo, String contenido, MultipartFile imagen) {
         Map<String, Object> respuesta = new HashMap<>();
-        
         try {
             // Subir imagen
             String filename = UUID.randomUUID() + "_" + imagen.getOriginalFilename();
@@ -75,14 +75,32 @@ public class NoticiasSI implements NoticiasService{
     }
 	
 	@Override
-	public ResponseEntity<Map<String,Object>>actualizarNoticia(Long id, Noticias noticia){
+	public ResponseEntity<Map<String,Object>>actualizarNoticia(Long id,String titulo, String contenido,MultipartFile imagen) {
 		Map<String, Object> respuesta = new HashMap<>();
 		Optional<Noticias> existe = dao.findById(id);
+		
 		if (existe.isPresent()) {
-            Noticias n = existe.get();
-            n.setTitulo(noticia.getTitulo());
-            n.setContenido(noticia.getContenido());
-            n.setImagenUrl(noticia.getImagenUrl());
+			Noticias n = existe.get();
+			
+			
+            if(imagen != null && !imagen.isEmpty()) {
+	            try {
+	            	String filename = UUID.randomUUID() + "_" + imagen.getOriginalFilename();
+	            	String imageUrl = subirImagen(imagen, filename);
+	            	n.setImagenUrl(imageUrl);
+				} catch (Exception e) {
+					respuesta.put("mensaje", "Error al subir la imagen: " + e.getMessage());
+	                respuesta.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+	                respuesta.put("fecha", new Date());
+	                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(respuesta);
+				}	
+            }
+			
+			
+            
+            n.setTitulo(titulo);
+            n.setContenido(contenido);
+            n.setFechaPublicacion(LocalDateTime.now());
             dao.save(n);
 
             respuesta.put("mensaje", "Noticia actualizada con éxito");
@@ -102,9 +120,22 @@ public class NoticiasSI implements NoticiasService{
 	 @Override
 	    public ResponseEntity<Map<String, Object>> eliminarNoticia(Long id) {
 	        Map<String, Object> respuesta = new HashMap<>();
-	        Optional<Noticias> noticia = dao.findById(id);
+	        Optional<Noticias> noticiaOpt = dao.findById(id);
 
-	        if (noticia.isPresent()) {
+	        if (noticiaOpt.isPresent()) {
+	        	Noticias noticia = noticiaOpt.get();
+	        	if(noticia.getImagenUrl() != null && !noticia.getImagenUrl().isEmpty()) {
+	        		try {
+	        			String[] parts = noticia.getImagenUrl().split("/");
+	        			String filename = parts[parts.length -1];
+	        			eliminarImagenSupabase(filename);
+	        		}catch (Exception e) {
+	        			respuesta.put("mensaje", "Error al eliminar la imagen de Supabase: " + e.getMessage());
+	                    respuesta.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+	                    respuesta.put("fecha", new Date());
+	                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(respuesta);
+	        		}
+	        	}
 	            dao.deleteById(id);
 	            respuesta.put("mensaje", "Noticia eliminada con éxito");
 	            respuesta.put("status", HttpStatus.OK.value());
@@ -149,5 +180,22 @@ public class NoticiasSI implements NoticiasService{
 	        return SUPABASE_URL + "/storage/v1/object/public/" + BUCKET + "/" + filename;
 	    }
 
+	 private void eliminarImagenSupabase(String filename) throws Exception {
+		    String deleteUrl = SUPABASE_URL + "/storage/v1/object/" + BUCKET + "/" + filename;
+
+		    HttpRequest request = HttpRequest.newBuilder()
+		            .uri(URI.create(deleteUrl))
+		            .header("Authorization", "Bearer " + SUPABASE_KEY)
+		            .DELETE()
+		            .build();
+
+		    HttpResponse<String> response = HttpClient.newHttpClient()
+		            .send(request, HttpResponse.BodyHandlers.ofString());
+
+		    if (response.statusCode() != 200 && response.statusCode() != 204) {
+		        throw new RuntimeException("Error al eliminar imagen en Supabase. Status: " 
+		                                   + response.statusCode() + " - " + response.body());
+		    }
+		}
 	
 }
