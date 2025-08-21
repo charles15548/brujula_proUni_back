@@ -10,9 +10,11 @@ import com.proUni.brujula.repository.AuthEstudianteRespository;
 
 @Service
 public class AuthEstudianteSI {
+	
 	@Autowired
     private AuthEstudianteRespository repository;
 
+	
 	public String login(String correo, String password) {
 	    	Optional<AuthEstudiantes> opt = repository.findByCorreo(correo);
 
@@ -22,7 +24,7 @@ public class AuthEstudianteSI {
 
 	        AuthEstudiantes estudiante = opt.get();
 
-	        if (password== estudiante.getPassword()) {
+	        if (password.equals(estudiante.getPassword())) {
 	            return "✅ Login exitoso";
 	        } else {
 	            return "❌ Contraseña incorrecta";
