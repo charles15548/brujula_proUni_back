@@ -33,6 +33,7 @@ public class AuthEstudianteSI {
 	    if (estudiante.getPassword().equals(password)) {
 	        response.put("success", true);
 	        response.put("message", "✅ Login exitoso");
+	        response.put("id", estudiante.getId());
 	    } else {
 	        response.put("success", false);
 	        response.put("message", "❌ Contraseña incorrecta");
