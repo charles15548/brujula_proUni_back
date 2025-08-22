@@ -38,16 +38,18 @@ public class NoticiasController {
     public ResponseEntity<Map<String, Object>> crearNoticia(
     		@RequestParam("titulo") String titulo,
     		@RequestParam("contenido") String contenido,
+    		@RequestParam("fuente") String fuente,
     		@RequestParam("imagen") MultipartFile imagen) {
-        return service.crearNoticia(titulo,contenido,imagen);
+        return service.crearNoticia(titulo,contenido,fuente,imagen);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Map<String, Object>> actualizarNoticia(@PathVariable Long id, 
     		@RequestParam("titulo") String titulo,
     		@RequestParam("contenido") String contenido,
+    		@RequestParam("fuente") String fuente,
     		@RequestParam(value = "imagen", required = false) MultipartFile imagen) {
-        return service.actualizarNoticia(id, titulo, contenido, imagen);
+        return service.actualizarNoticia(id, titulo, contenido,fuente, imagen);
     }
 
     @DeleteMapping("/{id}")

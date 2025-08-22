@@ -53,7 +53,7 @@ public class NoticiasSI implements NoticiasService{
 	
 	
 	@Override
-    public ResponseEntity<Map<String, Object>> crearNoticia(String titulo, String contenido, MultipartFile imagen) {
+    public ResponseEntity<Map<String, Object>> crearNoticia(String titulo, String contenido,String fuente, MultipartFile imagen) {
         Map<String, Object> respuesta = new HashMap<>();
         try {
             // Subir imagen
@@ -61,7 +61,7 @@ public class NoticiasSI implements NoticiasService{
             String imageUrl = subirImagen(imagen, filename);
 
             // Guardar noticia
-            Noticias noticia = new Noticias(titulo, contenido, imageUrl);
+            Noticias noticia = new Noticias(titulo, contenido,fuente, imageUrl);
             Noticias nueva = dao.save(noticia);
             
             respuesta.put("mensaje", "Noticia creada con éxito");
@@ -75,7 +75,7 @@ public class NoticiasSI implements NoticiasService{
     }
 	
 	@Override
-	public ResponseEntity<Map<String,Object>>actualizarNoticia(Long id,String titulo, String contenido,MultipartFile imagen) {
+	public ResponseEntity<Map<String,Object>>actualizarNoticia(Long id,String titulo, String contenido,String fuente ,MultipartFile imagen) {
 		Map<String, Object> respuesta = new HashMap<>();
 		Optional<Noticias> existe = dao.findById(id);
 		
@@ -100,6 +100,7 @@ public class NoticiasSI implements NoticiasService{
             
             n.setTitulo(titulo);
             n.setContenido(contenido);
+            n.setFuente(fuente);
             n.setFechaPublicacion(LocalDateTime.now());
             dao.save(n);
 

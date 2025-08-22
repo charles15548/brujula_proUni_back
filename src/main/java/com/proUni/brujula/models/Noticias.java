@@ -16,6 +16,8 @@ public class Noticias {
     private String titulo;
 
     private String contenido;
+    
+    private String fuente;
 
     @Column(name = "fecha_publicacion")
     private LocalDateTime fechaPublicacion = LocalDateTime.now();
@@ -25,9 +27,10 @@ public class Noticias {
 
     public Noticias() {}
 
-    public Noticias(String titulo, String contenido, String imagenUrl) {
+    public Noticias(String titulo, String contenido,String fuente, String imagenUrl) {
         this.titulo = titulo;
         this.contenido = contenido;
+        this.fuente = fuente;
         this.imagenUrl = imagenUrl;
     }
 }
