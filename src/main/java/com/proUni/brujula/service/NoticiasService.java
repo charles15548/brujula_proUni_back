@@ -8,10 +8,15 @@ import org.springframework.web.multipart.MultipartFile;
 import com.proUni.brujula.models.Noticias;
 
 public interface NoticiasService {
-	public ResponseEntity<Map<String, Object>> listarNoticias();
+	public ResponseEntity<Map<String, Object>> listarBaseNoticias();
+	
 	public ResponseEntity<Map<String, Object>> crearNoticia(String titulo,String gancho, String contenido,String fuente, MultipartFile imagen);
     public ResponseEntity<Map<String, Object>> actualizarNoticia(Long id,String gancho, String titulo, String contenido,String fuente,MultipartFile imagen);
     public ResponseEntity<Map<String, Object>> eliminarNoticia(Long id);
+    
+    /* NOTICIA */
+    ResponseEntity<Map<String, Object>> listarNoticias(Long userId);
+    ResponseEntity<Map<String, Object>> toggleLike(Long noticiaId, Long estudianteId);
 }
 
 

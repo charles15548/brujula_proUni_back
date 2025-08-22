@@ -19,21 +19,27 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.proUni.brujula.models.Noticias;
+import com.proUni.brujula.models.NoticiasLike;
+import com.proUni.brujula.repository.NoticiaLikeRepository;
 import com.proUni.brujula.repository.NoticiasRepository;
 import com.proUni.brujula.service.NoticiasService;
+
+import DTO.NoticiasProjection;
 
 @Service
 public class NoticiasSI implements NoticiasService{
 
 	@Autowired
 	private NoticiasRepository dao;
+	@Autowired
+	private NoticiaLikeRepository likeRepo;
 	
 	private final String SUPABASE_URL = "https://ykayyxqcplawwwyjqbrq.supabase.co";
     private final String SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlrYXl5eHFjcGxhd3d3eWpxYnJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU2MjE2MDYsImV4cCI6MjA3MTE5NzYwNn0.hrKC7HNWdM-AcFBAx1_PAOVE6gzhwrkHXwhLfLqyJ9k";
     private final String BUCKET = "img/noticias"; 
 
 	@Override
-	public ResponseEntity<Map<String, Object>> listarNoticias() {
+	public ResponseEntity<Map<String, Object>> listarBaseNoticias() {
 		Map<String,Object> respuesta = new HashMap<>();	
 		List<Noticias> noticias = dao.findAll();
 		
@@ -50,6 +56,24 @@ public class NoticiasSI implements NoticiasService{
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
 		}
 	}
+	@Override
+    public ResponseEntity<Map<String, Object>> listarNoticias(Long userId) {
+        Map<String, Object> respuesta = new HashMap<>();
+        List<NoticiasProjection> noticias = dao.listarNoticiasConLikes(userId);
+
+        if (noticias.isEmpty()) {
+            respuesta.put("mensaje", "No existen registros");
+            respuesta.put("status", HttpStatus.NOT_FOUND);
+            respuesta.put("fecha", new Date());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
+        }
+
+        respuesta.put("mensaje", "Lista de noticias");
+        respuesta.put("noticias", noticias);
+        respuesta.put("status", HttpStatus.OK);
+        respuesta.put("fecha", new Date());
+        return ResponseEntity.ok(respuesta);
+    }
 	
 	
 	@Override
@@ -199,5 +223,44 @@ public class NoticiasSI implements NoticiasService{
 		                                   + response.statusCode() + " - " + response.body());
 		    }
 		}
+
+
+
+
+
+	
+
+	 @Override
+	    public ResponseEntity<Map<String, Object>> toggleLike(Long noticiaId, Long estudianteId) {
+	        Map<String, Object> respuesta = new HashMap<>();
+
+	        Optional<NoticiasLike> likeOpt = likeRepo.findByNoticiaIdAndEstudianteId(noticiaId, estudianteId);
+
+	        if (likeOpt.isPresent()) {
+	            // ya existe → quitar like
+	            likeRepo.delete(likeOpt.get());
+	            respuesta.put("mensaje", "Like eliminado");
+	            respuesta.put("meGusta", false);
+	        } else {
+	            // no existe → dar like
+	            NoticiasLike like = new NoticiasLike();
+	            like.setNoticiaId(noticiaId);
+	            like.setEstudianteId(estudianteId);
+	            like.setFechaLike(LocalDateTime.now());
+	            likeRepo.save(like);
+	            respuesta.put("mensaje", "Like registrado");
+	            respuesta.put("meGusta", true);
+	        }
+
+	        // total de likes actualizado
+	        long totalLikes = likeRepo.countByNoticiaId(noticiaId);
+	        respuesta.put("totalLikes", totalLikes);
+
+	        return ResponseEntity.ok(respuesta);
+	    }
+
+
+	
+
 	
 }

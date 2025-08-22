@@ -28,10 +28,25 @@ public class NoticiasController {
     @Autowired
     private NoticiasService service;
 
+//    @GetMapping
+//    public ResponseEntity<Map<String, Object>> listarBaseNoticias() {
+//        return service.listarBaseNoticias();
+//    }
+    
     @GetMapping
-    public ResponseEntity<Map<String, Object>> listarNoticias() {
-        return service.listarNoticias();
+    public ResponseEntity<Map<String, Object>> listarNoticias(@RequestParam Long userId) {
+        return service.listarNoticias(userId);
     }
+
+    @PostMapping("/{id}/like-toggle")
+    public ResponseEntity<Map<String, Object>> toggleLike(
+            @PathVariable("id") Long noticiaId,
+            @RequestParam Long estudianteId) {
+        return service.toggleLike(noticiaId, estudianteId);
+    }
+    
+    
+    
 
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
