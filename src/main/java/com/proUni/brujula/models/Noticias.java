@@ -14,6 +14,8 @@ public class Noticias {
     private Long id;
 
     private String titulo;
+    
+    private String gancho;
 
     private String contenido;
     
@@ -27,8 +29,9 @@ public class Noticias {
 
     public Noticias() {}
 
-    public Noticias(String titulo, String contenido,String fuente, String imagenUrl) {
+    public Noticias(String titulo,String gancho, String contenido,String fuente, String imagenUrl) {
         this.titulo = titulo;
+        this.gancho = gancho;
         this.contenido = contenido;
         this.fuente = fuente;
         this.imagenUrl = imagenUrl;

@@ -37,19 +37,21 @@ public class NoticiasController {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Map<String, Object>> crearNoticia(
     		@RequestParam("titulo") String titulo,
+    		@RequestParam("gancho") String gancho,
     		@RequestParam("contenido") String contenido,
     		@RequestParam("fuente") String fuente,
     		@RequestParam("imagen") MultipartFile imagen) {
-        return service.crearNoticia(titulo,contenido,fuente,imagen);
+        return service.crearNoticia(titulo,gancho,contenido,fuente,imagen);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Map<String, Object>> actualizarNoticia(@PathVariable Long id, 
     		@RequestParam("titulo") String titulo,
+    		@RequestParam("gancho") String gancho,
     		@RequestParam("contenido") String contenido,
     		@RequestParam("fuente") String fuente,
     		@RequestParam(value = "imagen", required = false) MultipartFile imagen) {
-        return service.actualizarNoticia(id, titulo, contenido,fuente, imagen);
+        return service.actualizarNoticia(id, titulo,gancho, contenido,fuente, imagen);
     }
 
     @DeleteMapping("/{id}")
