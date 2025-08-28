@@ -3,6 +3,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -27,6 +29,9 @@ public class Noticias {
     @Column(name = "imagen_url")
     private String imagenUrl;
 
+    @OneToMany(mappedBy = "noticia", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<NoticiasLike> likes = new ArrayList<>();
+    
     public Noticias() {}
 
     public Noticias(String titulo,String gancho, String contenido,String fuente, String imagenUrl) {

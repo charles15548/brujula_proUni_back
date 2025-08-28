@@ -4,6 +4,8 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.ForeignKey;
+
 @Entity
 @Data
 @Table(name = "noticias_likes")
@@ -13,8 +15,9 @@ public class NoticiasLike {
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    private Long id;
 
-	    @Column(name = "noticia_id", nullable = false)
-	    private Long noticiaId;
+	 	@ManyToOne
+	 	@JoinColumn(name= "noticia_id", nullable = false,updatable = false)
+	    private Noticias noticia;
 
 	    @Column(name = "estudiante_id", nullable = false)
 	    private Long estudianteId;
@@ -24,8 +27,8 @@ public class NoticiasLike {
 
 	    public NoticiasLike() {}
 
-	    public NoticiasLike(Long noticiaId, Long estudianteId) {
-	        this.noticiaId = noticiaId;
+	    public NoticiasLike(Noticias noticia, Long estudianteId) {
+	        this.noticia = noticia;
 	        this.estudianteId = estudianteId;
 	    }
    

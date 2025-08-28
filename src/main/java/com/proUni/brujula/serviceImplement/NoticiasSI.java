@@ -162,7 +162,7 @@ public class NoticiasSI implements NoticiasService{
 	                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(respuesta);
 	        		}
 	        	}
-	            dao.deleteById(id);
+	            dao.delete(noticia);
 	            respuesta.put("mensaje", "Noticia eliminada con éxito");
 	            respuesta.put("status", HttpStatus.OK.value());
 	            respuesta.put("fecha", new Date());
@@ -243,8 +243,11 @@ public class NoticiasSI implements NoticiasService{
 	            respuesta.put("meGusta", false);
 	        } else {
 	            // no existe → dar like
+	            
+	            Noticias noticia = dao.findById(noticiaId)
+                        .orElseThrow(() -> new RuntimeException("Noticia no encontrada"));
 	            NoticiasLike like = new NoticiasLike();
-	            like.setNoticiaId(noticiaId);
+	            like.setNoticia(noticia);
 	            like.setEstudianteId(estudianteId);
 	            like.setFechaLike(LocalDateTime.now());
 	            likeRepo.save(like);
