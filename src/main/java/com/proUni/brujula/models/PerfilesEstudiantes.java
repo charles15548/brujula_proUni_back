@@ -18,22 +18,30 @@ public class PerfilesEstudiantes{
     private String apellidos;
 
     private String carrera;
+    private String biografia;
+    @Column(name = "proyecto_vida")
+    private String proyectoVida;
+    @Column(name = "url_cv")
+    private String urlCv;
+    private String foto;
     
     @ManyToOne
-    @JoinColumn(name = "perfil_id")
+    @JoinColumn(name = "auth_id")
     private AuthEstudiantes estudiante;
 
     @Column(name = "fecha_registro")
     private LocalDateTime fechaRegistro = LocalDateTime.now();
 
     public PerfilesEstudiantes() {};
-	public PerfilesEstudiantes(String nombres, String apellidos, String carrera, AuthEstudiantes estudiante,
-			LocalDateTime fechaRegistro) {
+	public PerfilesEstudiantes(String nombres, String apellidos, String carrera, 
+			String biografia, String proyectoVida, String urlCv,String foto) {
 		this.nombres = nombres;
 		this.apellidos = apellidos;
 		this.carrera = carrera;
-		this.estudiante = estudiante;
-		this.fechaRegistro = fechaRegistro;
+		this.biografia = biografia;
+		this.proyectoVida = proyectoVida;
+		this.urlCv = urlCv;
+		this.foto = foto;
 	}
 
      
