@@ -19,6 +19,8 @@ public class HerramientasProfesional{
 
     private String link;
     
+    private String nombre;
+    
     private String img;
     
     @ManyToOne
