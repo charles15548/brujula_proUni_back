@@ -1,0 +1,21 @@
+package com.proUni.brujula.service;
+
+import java.util.Map;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.proUni.brujula.models.Noticias;
+
+public interface HerramientasService {
+	public ResponseEntity<Map<String, Object>> listarHerramientasProfesional();
+	
+	public ResponseEntity<Map<String, Object>> crearHerramientasProfesional(String titulo,String gancho, String contenido,String fuente, MultipartFile imagen);
+    public ResponseEntity<Map<String, Object>> actualizarHerramientasProfesional(Long id,String gancho, String titulo, String contenido,String fuente,MultipartFile imagen);
+    public ResponseEntity<Map<String, Object>> eliminarHerramientasProfesional(Long id);
+    
+    /* NOTICIA */
+    ResponseEntity<Map<String, Object>> listarHerramientasProfesionalPorTipo(Long userId);
+}
+
+
