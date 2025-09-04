@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.proUni.brujula.models.Noticias;
 
-public interface HerramientasService {
+public interface RecursoProfesionalService {
 	public ResponseEntity<Map<String, Object>> listarHerramientasProfesional();
 	
 	public ResponseEntity<Map<String, Object>> crearHerramientasProfesional(String titulo,String gancho, String contenido,String fuente, MultipartFile imagen);

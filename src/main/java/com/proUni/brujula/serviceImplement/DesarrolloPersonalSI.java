@@ -1,5 +1,6 @@
 package com.proUni.brujula.serviceImplement;
 
+
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -55,116 +56,5 @@ public class DesarrolloPersonalSI implements DesarrolloPersonalService{
 	}
 
 	 
-	 
-	 private String subirImagen(MultipartFile imagen, String filename) throws Exception {
-	        String uploadUrl = SUPABASE_URL + "/storage/v1/object/" + BUCKET + "/" + filename;
-	        
-	        System.out.println("URL de subida: " + uploadUrl);
-	        System.out.println("Tamaño archivo: " + imagen.getSize() + " bytes");
-	        System.out.println("Tipo de archivo: " + imagen.getContentType());
-	        
-	        HttpRequest request = HttpRequest.newBuilder()
-	                .uri(URI.create(uploadUrl))
-	                .header("Authorization", "Bearer " + SUPABASE_KEY)
-	                .header("Content-Type", imagen.getContentType())
-	                .header("x-upsert", "true")
-	                .POST(HttpRequest.BodyPublishers.ofByteArray(imagen.getBytes()))
-	                .build();
 
-	        HttpResponse<String> response = HttpClient.newHttpClient()
-	                .send(request, HttpResponse.BodyHandlers.ofString());
-	        
-	        System.out.println("Status Code: " + response.statusCode());
-	        System.out.println("Respuesta: " + response.body());
-	        
-	        if (response.statusCode() != 200 && response.statusCode() != 201) {
-	            throw new RuntimeException("Error al subir imagen. Status: " + response.statusCode() + " - " + response.body());
-	        }
-	        
-	        return SUPABASE_URL + "/storage/v1/object/public/" + BUCKET + "/" + filename;
-	    }
-
-
-
-
-	@Override
-	public ResponseEntity<Map<String, Object>> crearDesarrolloPersonal(String titulo, String contenido, Long idTipo,
-			MultipartFile imagen) {
-		Map<String, Object> respuesta = new HashMap<>();
-        
-        try {
-            // Subir imagen
-            String filename = UUID.randomUUID() + "_" + imagen.getOriginalFilename();
-            String Url = subirImagen(imagen, filename);
-
-            // Guardar noticia
-            DesarrolloPersonal desarrollo_Personal = new DesarrolloPersonal(titulo, contenido,idTipo, Url);
-            DesarrolloPersonal nueva = dao.save(desarrollo_Personal);
-            
-            respuesta.put("mensaje", "dp creada con éxito");
-            respuesta.put("desarrollo_Personal", nueva);
-            return ResponseEntity.ok(respuesta);
-            
-        } catch (Exception e) {
-            respuesta.put("mensaje", "Error: " + e.getMessage());
-            return ResponseEntity.badRequest().body(respuesta);
-        }
-	}
-
-
-	@Override
-	public ResponseEntity<Map<String, Object>> actualizarDesarrolloPersonal(Long id,
-	        DesarrolloPersonal desarrollo_Personal) {
-
-	    Map<String, Object> respuesta = new HashMap<>();
-	    Optional<DesarrolloPersonal> existe = dao.findById(id);
-
-	    if (existe.isPresent()) {
-	        DesarrolloPersonal dp = existe.get();
-	        dp.setTitulo(desarrollo_Personal.getTitulo());
-	        dp.setContenido(desarrollo_Personal.getContenido());
-	        dp.setTipo_Desarrollo_Personal(desarrollo_Personal.getTipo_Desarrollo_Personal());
-	        dp.setUrl(desarrollo_Personal.getUrl());
-	        // Opcional: actualizar la fecha si quieres reflejar la modificación
-	        dp.setFechaPublicacion(LocalDateTime.now());
-
-	        dao.save(dp);
-
-	        respuesta.put("mensaje", "Desarrollo Personal actualizado con éxito");
-	        respuesta.put("desarrolloPersonal", dp);
-	        respuesta.put("status", HttpStatus.OK.value());
-	        respuesta.put("fecha", new Date());
-	        return ResponseEntity.ok(respuesta);
-
-	    } else {
-	        respuesta.put("mensaje", "No se encontró el Desarrollo Personal para actualizar");
-	        respuesta.put("status", HttpStatus.NOT_FOUND.value());
-	        respuesta.put("fecha", new Date());
-	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
-	    }
-	}
-
-
-
-
-	@Override
-	public ResponseEntity<Map<String, Object>> eliminarDesarrolloPersonal(Long id) {
-		Map<String, Object> respuesta = new HashMap<>();
-        Optional<DesarrolloPersonal> desarrollo_Personal = dao.findById(id);
-
-        if (desarrollo_Personal.isPresent()) {
-            dao.deleteById(id);
-            respuesta.put("mensaje", "DP eliminada con éxito");
-            respuesta.put("status", HttpStatus.OK.value());
-            respuesta.put("fecha", new Date());
-            return ResponseEntity.ok(respuesta);
-        } else {
-            respuesta.put("mensaje", "No se encontró la DP para eliminar");
-            respuesta.put("status", HttpStatus.NOT_FOUND.value());
-            respuesta.put("fecha", new Date());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
-        }
-	}
-
-	
 }

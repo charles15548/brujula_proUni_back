@@ -17,22 +17,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.proUni.brujula.models.DesarrolloPersonal;
-import com.proUni.brujula.service.DesarrolloPersonalService;
+import com.proUni.brujula.models.Noticias;
+import com.proUni.brujula.service.RecursoProfesionalService;
+import com.proUni.brujula.service.NoticiasService;
+import com.proUni.brujula.service.RecursoPersonalService;
 
 @RestController
-@RequestMapping("/api/desarrollo_personal")
+@RequestMapping("/api/recursoPersonal")
 @CrossOrigin(origins = {"http://localhost:3000", "https://soporte2.intelectiasac.com"})
-public class DesarrolloPersonalController {
+public class RecursoPersonalController {
 
     @Autowired
-    private DesarrolloPersonalService service;
+    private RecursoPersonalService service;
 
+    
     @GetMapping
-    public ResponseEntity<Map<String, Object>> listarDesarrolloPersonal() {
-        return service.listarDesarrolloPersonal();
+    public ResponseEntity<Map<String, Object>> listarRecursoPersonalPorTipo(@RequestParam Long tipo) {
+        return service.listarRecursosPersonalesPorTipo(tipo);
     }
 
-
+   
+    
 }
 

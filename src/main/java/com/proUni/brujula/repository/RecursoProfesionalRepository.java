@@ -7,12 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.proUni.brujula.models.HerramientasProfesional;
+import com.proUni.brujula.models.RecursosProfesional;
 import com.proUni.brujula.models.Noticias;
 
 import DTO.NoticiasProjection;
 
 @Repository
-public interface HerramientasProfesionalRepository extends JpaRepository<HerramientasProfesional, Long> {	
-	  List<HerramientasProfesional> findByDesarrolloProfesionalId(Long dProfesionalId);
+public interface RecursoProfesionalRepository extends JpaRepository<RecursosProfesional, Long> {	
+	  List<RecursosProfesional> findByDesarrolloProfesionalId(Long dProfesionalId);
 }

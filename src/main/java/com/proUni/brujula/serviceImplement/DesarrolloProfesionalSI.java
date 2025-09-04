@@ -38,6 +38,4 @@ public class DesarrolloProfesionalSI implements DesarrolloProfesionalService{
 		}
 	}
 	
-	
-
 }

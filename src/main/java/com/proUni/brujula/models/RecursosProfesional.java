@@ -6,8 +6,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-@Table(name = "uni_top")
-public class UniTop{
+@Table(name = "recursos_profesionales")
+public class RecursosProfesional{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,6 +16,10 @@ public class UniTop{
     private String titulo;
 
     private String descripcion;
+
+    private String link;
+    
+    private String nombre;
     
     private String img;
     
@@ -26,7 +30,7 @@ public class UniTop{
     @Column(name = "fecha_publicacion")
     private LocalDateTime fechaRegistro = LocalDateTime.now();
 
-    public 	UniTop() {};
+    public 	RecursosProfesional() {};
 	
 
      

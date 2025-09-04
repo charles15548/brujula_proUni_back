@@ -18,16 +18,16 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.proUni.brujula.models.Noticias;
-import com.proUni.brujula.service.HerramientasService;
+import com.proUni.brujula.service.RecursoProfesionalService;
 import com.proUni.brujula.service.NoticiasService;
 
 @RestController
 @RequestMapping("/api/herramientaProfesional")
 @CrossOrigin(origins = {"http://localhost:3000", "https://soporte2.intelectiasac.com"})
-public class HerramientaProfesionalController {
+public class RecursoProfesionalController {
 
     @Autowired
-    private HerramientasService service;
+    private RecursoProfesionalService service;
 
     
     @GetMapping
