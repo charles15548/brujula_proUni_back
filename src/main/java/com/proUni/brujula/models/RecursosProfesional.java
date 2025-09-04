@@ -23,14 +23,21 @@ public class RecursosProfesional{
     
     private String img;
     
-    @ManyToOne
-    @JoinColumn(name = "d_profesional_id")
-    private DesarrolloProfesional desarrolloProfesional;
+    @Column(name = "d_profesional_id", nullable = false)
+    private Long dpId;
 
     @Column(name = "fecha_publicacion")
     private LocalDateTime fechaRegistro = LocalDateTime.now();
 
-    public 	RecursosProfesional() {};
+    public RecursosProfesional() {};
+    public RecursosProfesional(String titulo, String descripcion, String link, String nombre, String img, Long dpId) {
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.link = link;
+        this.nombre = nombre;
+        this.img = img;
+        this.dpId = dpId;
+    }
 	
 
      

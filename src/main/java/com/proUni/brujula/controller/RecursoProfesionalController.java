@@ -34,7 +34,32 @@ public class RecursoProfesionalController {
     public ResponseEntity<Map<String, Object>> listarDesarrolloProfesional(@RequestParam Long tipo) {
         return service.listarHerramientasProfesionalPorTipo(tipo);
     }
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Map<String, Object>> crearDesarrolloProfesional(
+    		@RequestParam("titulo") String titulo,
+    		@RequestParam("descripcion") String descripcion,
+    		@RequestParam("link") String link,
+    		@RequestParam("nombre") String nombre,
+    		@RequestParam("img") MultipartFile img,
+    		@RequestParam("dpId") Long dpId) {
+        return service.crearHerramientasProfesional(titulo,descripcion,link,nombre,img,dpId);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<Map<String, Object>> actualizarDesarrolloProfesional(
+    		@PathVariable Long id,
+    		@RequestParam("titulo") String titulo,
+    		@RequestParam("descripcion") String descripcion,
+    		@RequestParam("link") String link,
+    		@RequestParam("nombre") String nombre,
+    		@RequestParam(value ="img", required = false) MultipartFile img,
+    		@RequestParam("dpId") Long dpId) {
+        return service.actualizarHerramientasProfesional(id,titulo,descripcion,link,nombre,img,dpId);
+    }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Map<String, Object>> eliminar(@PathVariable Long id) {
+        return service.eliminarHerramientasProfesional(id);
+    }
    
     
 }
