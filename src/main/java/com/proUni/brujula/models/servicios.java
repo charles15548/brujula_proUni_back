@@ -26,6 +26,7 @@ public class servicios {
     private String nombre;
     
     private String ubicacion;
+    private String link;
 
     
     @Column(name = "fecha_publicacion")
@@ -33,12 +34,13 @@ public class servicios {
 
     servicios(){}
 
-	public servicios(Long id, String tipo, String facultad, String nombre, String ubicacion) {
+	public servicios(Long id, String tipo, String facultad, String nombre, String ubicacion, String link) {
 	
 		this.tipo = tipo;
 		this.facultad = facultad;
 		this.nombre = nombre;
 		this.ubicacion = ubicacion;
+		this.link = link;
 	};
     
 }
