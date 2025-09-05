@@ -5,7 +5,6 @@ import java.util.Map;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.proUni.brujula.models.Noticias;
 
 public interface NoticiasService {
 	public ResponseEntity<Map<String, Object>> listarBaseNoticias();
