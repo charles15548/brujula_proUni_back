@@ -44,7 +44,7 @@ public class BienvenidaSI implements BienvenidaService{
 		
 		if(!b.isEmpty()) {
 			respuesta.put("mensaje", "Lista");
-			respuesta.put("desarrollo_Personal", b);
+			respuesta.put("bienvenida", b);
 			respuesta.put("status", HttpStatus.OK);
 			respuesta.put("fecha", new Date());	
 			return ResponseEntity.status(HttpStatus.OK).body(respuesta);
